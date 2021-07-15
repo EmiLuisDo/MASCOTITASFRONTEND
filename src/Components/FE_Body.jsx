@@ -22,12 +22,12 @@ export default function FE_Body(prop) {
     const [animalsCardsList, setAnimalsCardsList] = useState([]);
     
     const renderAnimalCards = (apiRequestAnswer) => {
-        console.log(apiRequestAnswer);
+
         setAnimalsCardsList(
             apiRequestAnswer.map((current, id) => {
                 return (
                     <Grid
-                        key={current.id}
+                        key={id}
                         container
                         spacing={0}
                         direction="column"
@@ -38,8 +38,8 @@ export default function FE_Body(prop) {
                             <CardMedia
                                 component="img"
                                 alt={current.nombre}
-                                height="300em"
-                                image={current.fotos[2].imagen}
+                                height="auto"
+                                image={current.fotos[0].imagen}
                                 title={current.nombre}
                             />
                             <CardContent>
@@ -62,10 +62,7 @@ export default function FE_Body(prop) {
         )
     }
     const apiCall = () => {
-        axios({
-            method: 'get',
-            url: 'https://localhost:5001/api/mascotas'
-        })
+        axios({method: 'get', url: 'https://localhost:5001/api/mascotas'})
         .then(acceptedAnswer => renderAnimalCards(acceptedAnswer.data))
         .catch(rejectedAnswer => console.log('Error al obtener los datos - ', rejectedAnswer));
     }
