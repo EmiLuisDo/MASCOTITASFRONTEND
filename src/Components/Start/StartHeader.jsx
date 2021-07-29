@@ -1,7 +1,6 @@
 import React from 'react'
 
-export default function FE_Header(prop) {
-    if (prop.idHeader === 'StartHeader'){
+export default function StartHeader() {
         return (
             <div>
                 <h1 style={{
@@ -19,5 +18,4 @@ export default function FE_Header(prop) {
                 </p>
             </div>
         )
-    }
 }

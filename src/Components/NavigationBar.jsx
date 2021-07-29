@@ -1,6 +1,8 @@
 import React from 'react';
-import Header from './FE_Header';
-import Body from './FE_Body';
+import StartHeader from './Start/StartHeader';
+import StartBody from './Start/StartBody';
+import SupportHeader from './Support/SupportHeader';
+import SupportBody from './Support/SupportBody';
 
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +11,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import HelpIcon from '@material-ui/icons/Help';
 import HomeIcon from '@material-ui/icons/Home';
+import MoneyIcon from '@material-ui/icons/Money';
+import PeopleIcon from '@material-ui/icons/People';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
@@ -49,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    backgroundColor: '#e8f5e9',
+    backgroundColor: 'lightgrey',
   },
 }));
 
@@ -74,14 +78,24 @@ export default function ScrollableTabsButtonForce() {
           variant="fullWidth"
         >
           <Tab label="Inicio" icon={<HomeIcon />} {...a11yProps(0)} />
-          <Tab label="Soporte" icon={<HelpIcon />} {...a11yProps(1)} />
+          <Tab label="Donaciones" icon={<MoneyIcon />} {...a11yProps(1)} />
+          <Tab label="Soporte" icon={<HelpIcon />} {...a11yProps(2)} />
+          <Tab label="Registro" icon={<PeopleIcon />} {...a11yProps(3)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Header idHeader='StartHeader'></Header>
-        <Body idBody='StartBody'></Body>
+        <StartHeader/>
+        <StartBody/>
       </TabPanel>
       <TabPanel value={value} index={1}>
+        
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <SupportHeader/>
+        <SupportBody/>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+
       </TabPanel>
     </div>
   );

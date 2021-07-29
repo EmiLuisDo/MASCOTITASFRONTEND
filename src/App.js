@@ -1,9 +1,9 @@
-import NavBar from './Components/FE_NavigationBar';
+import NavigationBar from './Components/NavigationBar';
 
 function App() {
   return (
     <div className="App">
-      <NavBar></NavBar>
+      <NavigationBar></NavigationBar>
     </div>
   )
 }
