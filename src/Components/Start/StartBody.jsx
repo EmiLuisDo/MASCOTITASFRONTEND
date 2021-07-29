@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid'
 
 const useStyles = makeStyles({
     root: {
-        width: '20em',
+        width: '25em',
         marginBottom: '3em'
     },
 });
@@ -22,9 +22,13 @@ const useStyles = makeStyles({
 export default function StartBody() {
     const classes = useStyles();
     const [animalsCardsList, setAnimalsCardsList] = useState([]);
+    const [currentPet, setCurrentPet] = useState();
     const [adoptionForm, setAdoptionForm] = useState();
     
-    const renderAdoptionForm = id => setAdoptionForm(<AdoptionForm idMascota = {id}/>);
+    const renderAdoptionForm = idPet => {
+        setCurrentPet(idPet);
+        setAdoptionForm(true);
+    }
     
     useEffect(() => {
         axios({
@@ -73,7 +77,7 @@ export default function StartBody() {
                                         size="small" 
                                         color="primary" 
                                         className="justify-content-center" 
-                                        onClick = {renderAdoptionForm(current.id)}
+                                        onClick = {() => renderAdoptionForm(current.id)}
                                         >Adoptar
                                     </Button>
                                 </CardActions>
@@ -95,7 +99,11 @@ export default function StartBody() {
                     marginBottom: '2em'
             }}>A continuación te mostramos los animales que esperan ser parte de tu familia:</p>
             {animalsCardsList}
-            {adoptionForm}                
+            {adoptionForm && <AdoptionForm 
+                                    idPet = {currentPet}
+                                    adoptionForm = {setAdoptionForm}
+                                />
+            }                
         </div>
     )
 }

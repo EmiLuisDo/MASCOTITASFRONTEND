@@ -9,35 +9,32 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { useEffect } from 'react';
 
 export default function AdoptionForm(props) {
-  const [open, setOpen] = useState();
-  const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [open, setOpen] = useState(true);
+  const handleClose = () => {
+    setOpen(false);
+    props.adoptionForm(false);
+  }
   const handlePetsUpdate = (personData) => {
     axios({
       method: 'PUT',
-      url: API.UPDATE_MASCOTA_ADOPTION,
-      data: {
-        'Id': props.idMascota,
-        idPersona: personData.id
-      }
+      url: API.UPDATE_MASCOTA_ADOPTION(props.idPet, personData.id),
     })
-    .then(response => console.log('Se ha modificado la mascota con éxito.'))
+    .then(console.log('Se ha modificado la mascota con éxito.'))
     .catch(response => console.log('Ha ocurrido un error al intentar modificar la mascota - ', response.data))
   }
   const handleRegisterPerson = () => {
     axios({
-        method: 'POST',
-        url: API.ADD_PERSONA,
-        data: persona
+      method: 'POST',
+      url: API.ADD_PERSONA,
+      data: persona
     })
     .then(response => {
       console.log('Se ha registrado la adopción con éxito.');
       handlePetsUpdate(response.data);
     })
-    .catch(response => console.log('Ha ocurrido un error al intentar adoptar a la mascota - ', response.data))
+    .catch(response => console.log('Ha ocurrido un error al intentar adoptar a la mascota - ', response.response))
   }
   const handleSendButton = () => {
       handleRegisterPerson();
@@ -49,13 +46,9 @@ export default function AdoptionForm(props) {
       DNI: '',
       correoElectronico: '',
       direccion: '',
-      telefono: 0,
+      telefono: '0',
       fechaNacimiento: ''
   }
-  useEffect(() => {
-    console.log("llegue");
-    return handleClickOpen();
-  }, [])
 
   return (
     <div>
@@ -122,7 +115,7 @@ export default function AdoptionForm(props) {
             autoFocus
             margin="dense"
             id="fechaNacimiento"
-            label="Fecha de nacimiento"
+            title="Fecha de nacimiento"
             type="date"
             onChange = {e => persona.fechaNacimiento = e.target.value}
             required
