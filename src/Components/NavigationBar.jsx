@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    backgroundColor: 'lightgrey'
+    backgroundImage: "url('https://i.postimg.cc/jjZWMLM3/animalitos.jpg')"
   },
 }));
 
@@ -67,7 +67,7 @@ export default function ScrollableTabsButtonForce() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="default" style={{height: '5em'}}>
         <Tabs
           value={value}
           onChange={handleChange}

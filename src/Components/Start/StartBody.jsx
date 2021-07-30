@@ -44,13 +44,16 @@ export default function StartBody() {
             <Grid container>{
                 apiRequestAnswer.map((current, id) => {
                     return (
-                        <Grid 
+                        <Grid
+                            container
                             item 
                             md={4}
                             sm={6}
                             key={id}
+                            justify='center'
+                            alignItems='center'
                         >
-                            <Card className={classes.root}>
+                            <Card className={classes.root} >
                                 <CardMedia
                                     component="img"
                                     alt={current.nombre}
@@ -78,7 +81,14 @@ export default function StartBody() {
                                         color="primary" 
                                         className="justify-content-center" 
                                         onClick = {() => renderAdoptionForm(current.id)}
-                                        >Adoptar
+                                    >Adoptar
+                                    </Button>
+                                    <Button
+                                        size='small'
+                                        color='primary'
+                                        className='text-left'
+                                        onClick = {() => alert("Fotos de animales")}
+                                    >Ver más
                                     </Button>
                                 </CardActions>
                             </Card>
@@ -92,12 +102,7 @@ export default function StartBody() {
 
     return (
         <div>
-            <p style={{
-                    fontFamily: 'Segoe UI',
-                    textAlign: 'left',
-                    marginTop: '2em',
-                    marginBottom: '2em'
-            }}>A continuación te mostramos los animales que esperan ser parte de tu familia:</p>
+            <br/>
             {animalsCardsList}
             {adoptionForm && <AdoptionForm 
                                     idPet = {currentPet}
