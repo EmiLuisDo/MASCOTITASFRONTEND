@@ -26,6 +26,9 @@ export default function AdoptionForm(props) {
     setFlagState(true);
     setFormFlagState(status);
   }
+  const refreshPage = () => {
+    window.location.reload(true);
+  }
   const handlePetsUpdate = (personData) => {
     axios({
       method: 'PUT',
@@ -33,6 +36,7 @@ export default function AdoptionForm(props) {
     })
     .then(() => {
       console.log('Se ha modificado la mascota con éxito.');
+      refreshPage();
     })
     .catch(response => console.log('Ha ocurrido un error al intentar modificar la mascota - ', response.data))
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Row, Item } from '@mui-treasury/components/flex';
-import { Info, InfoTitle, InfoSubtitle, InfoCaption } from '@mui-treasury/components/info';
+import { Row } from '@mui-treasury/components/flex';
+import { Info, InfoTitle, InfoCaption } from '@mui-treasury/components/info';
 import { useTutorInfoStyles } from '@mui-treasury/styles/info/tutor';
 import { useSizedIconButtonStyles } from '@mui-treasury/styles/iconButton/sized';
 import { useDynamicAvatarStyles } from '@mui-treasury/styles/avatar/dynamic';
@@ -19,9 +19,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function TutorCard() {
-  const styles = useStyles();
-  const iconBtnStyles = useSizedIconButtonStyles({ padding: 6 });
-  const avatarStyles = useDynamicAvatarStyles({ radius: 12, size: 48 });
+    
   return (
     <Row p={1.5} gap={2} bgcolor={'#f5f5f5'} borderRadius={16}>
       <Info position={'center'}useStyles={useTutorInfoStyles}>
