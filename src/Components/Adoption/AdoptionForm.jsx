@@ -1,6 +1,7 @@
 import {React, useState} from 'react';
 import axios from 'axios';
 import * as API from '../../ApiLinks';
+import AdoptionFormAlert from './AdoptionFormAlert';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -12,33 +13,56 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function AdoptionForm(props) {
   const [open, setOpen] = useState(true);
+  const [flagState, setFlagState] = useState();
+  const [formFlagState, setFormFlagState] = useState();
+
+  /* const handleClickOpen = () => setOpen(true); */
   const handleClose = () => {
     setOpen(false);
     props.adoptionForm(false);
+  }
+  const handleFormAlert = (status) => {
+    console.log('Valor del estado: ', status);
+    setFlagState(true);
+    setFormFlagState(status);
   }
   const handlePetsUpdate = (personData) => {
     axios({
       method: 'PUT',
       url: API.UPDATE_MASCOTA_ADOPTION(props.idPet, personData.id),
     })
-    .then(console.log('Se ha modificado la mascota con éxito.'))
+    .then(() => {
+      console.log('Se ha modificado la mascota con éxito.');
+    })
     .catch(response => console.log('Ha ocurrido un error al intentar modificar la mascota - ', response.data))
   }
   const handleRegisterPerson = () => {
-    axios({
-      method: 'POST',
-      url: API.ADD_PERSONA,
-      data: persona
-    })
-    .then(response => {
-      console.log('Se ha registrado la adopción con éxito.');
-      handlePetsUpdate(response.data);
-    })
-    .catch(response => console.log('Ha ocurrido un error al intentar adoptar a la mascota - ', response.response))
+    if(
+      persona.nombre === ''
+      || persona.apellido === ''
+      || persona.DNI === ''
+      || persona.direccion === ''
+      || persona.telefono === ''
+      || persona.fechaNacimiento === ''
+      ) {
+        handleFormAlert(false);
+      } else {
+        axios({
+          method: 'POST',
+          url: API.ADD_PERSONA,
+          data: persona
+        })
+        .then(response => {
+          console.log('Se ha registrado la adopción con éxito.');
+          handlePetsUpdate(response.data);
+        })
+        .catch(response => console.log('Ha ocurrido un error al intentar adoptar a la mascota - ', response.response))
+        handleFormAlert(true);
+        handleClose();
+    }
   }
   const handleSendButton = () => {
-      handleRegisterPerson();
-      handleClose();
+    handleRegisterPerson();
   }
   const persona = {
       nombre: '',
@@ -46,7 +70,7 @@ export default function AdoptionForm(props) {
       DNI: '',
       correoElectronico: '',
       direccion: '',
-      telefono: '0',
+      telefono: '',
       fechaNacimiento: ''
   }
 
@@ -63,7 +87,10 @@ export default function AdoptionForm(props) {
             id="nombre"
             label="Nombre"
             type="text"
-            onChange = {e => persona.nombre = e.target.value}
+            onChange = {e => {
+              persona.nombre = e.target.value
+              console.log(persona)
+            }}
             required
             fullWidth
           />
@@ -131,6 +158,10 @@ export default function AdoptionForm(props) {
           </Button>
         </DialogActions>
       </Dialog>
+      {flagState && <AdoptionFormAlert 
+                              state={formFlagState}
+                              flagStateParam={setFlagState}
+                            />}
     </div>
   );
 }
